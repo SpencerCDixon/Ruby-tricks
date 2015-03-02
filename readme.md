@@ -37,3 +37,12 @@ b
 # => 1
 ```
 
+
+Multiple assignment with splat operator (ruby koans)
+```ruby
+def test_parallel_assignments_with_splat_operator
+  first_name, *last_name = ["John", "Smith", "III"]
+  assert_equal "John", first_name
+  assert_equal ["Smith", "III"], last_name
+end
+```
