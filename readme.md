@@ -134,3 +134,40 @@ def test_symbols_with_interpolation_can_be_built
   assert_equal "cats and dogs".to_sym, symbol
 end
 ```
+
+Regexp \b word boundary example:
+```ruby
+def test_slash_b_anchors_to_a_word_boundary
+  assert_equal "vines", "bovine vines"[/\bvine./]
+end
+```
+
+Using parenthesis in Regexp to capture specific parts of a regex:
+```ruby
+def test_parentheses_also_capture_matched_content_by_number
+  assert_equal "Gray", "Gray, James"[/(\w+), (\w+)/, 1]
+  assert_equal "James", "Gray, James"[/(\w+), (\w+)/, 2]
+end
+```
+
+Regexp will save global variables in number format to access specific pieces of
+the regex:
+```ruby
+def test_variables_can_also_be_used_to_access_captures
+  assert_equal "Gray, James", "Name:  Gray, James"[/(\w+), (\w+)/]
+  assert_equal "Gray", $1
+  assert_equal "James", $2
+end
+```
+
+Using send to execute methods with paramters:
+```ruby
+class Klass
+  def hello(*args)
+    "Hello " + args.join(' ')
+  end
+end
+k = Klass.new
+k.send :hello, "gentle", "readers"   #=> "Hello gentle readers"
+```
+
