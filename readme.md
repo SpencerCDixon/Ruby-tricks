@@ -171,3 +171,112 @@ k = Klass.new
 k.send :hello, "gentle", "readers"   #=> "Hello gentle readers"
 ```
 
+## Method Information:
+
+`#scan` will return an array of what it finds
+
+```ruby
+  def test_scan_is_like_find_all
+    assert_equal ["one", "two", "three"], "one two-three".scan(/\w+/)
+  end
+
+  def test_sub_is_like_find_and_replace
+    assert_equal "one t-three", "one two-three".sub(/(t\w*)/) { $1[0, 1] }
+  end
+
+  def test_gsub_is_like_find_and_replace_all
+    assert_equal "one t-t", "one two-three".gsub(/(t\w*)/) { $1[0, 1] }
+  end
+```
+
+Methods with splat arguments will return an empty array if no args are provided,
+will prevent nil calls.
+
+```ruby
+  def method_with_var_args(*args)
+    args
+  end
+
+  def test_calling_with_variable_arguments
+    assert_equal Array, method_with_var_args.class
+    assert_equal [], method_with_var_args
+    assert_equal [:one], method_with_var_args(:one)
+    assert_equal [:one, :two], method_with_var_args(:one, :two)
+  end
+```
+
+method with keyword arguments:
+```ruby
+def method_with_var_args(*args)
+  args
+end
+
+def test_calling_with_variable_arguments
+  assert_equal Array, method_with_var_args.class
+  assert_equal [], method_with_var_args
+  assert_equal [:one], method_with_var_args(:one)
+  assert_equal [:one, :two], method_with_var_args(:one, :two)
+end
+```
+
+Error inheritance structure in Ruby:
+```ruby
+  def test_exceptions_inherit_from_Exception
+    assert_equal RuntimeError, MySpecialError.ancestors[1]
+    assert_equal StandardError, MySpecialError.ancestors[2]
+    assert_equal Exception, MySpecialError.ancestors[3]
+    assert_equal Object, MySpecialError.ancestors[4]
+  end
+```
+
+Calling Lamdas with brackets:
+```ruby
+def test_blocks_can_be_assigned_to_variables_and_called_explicitly
+  add_one = lambda { |n| n + 1 }
+  assert_equal 11, add_one.call(10)
+
+  # Alternative calling syntax
+  assert_equal 11, add_one[10]
+end
+```
+
+Methods with blocks being called:
+```ruby
+def method_with_explicit_block(&block)
+  block.call(10)
+end
+
+def test_methods_can_take_an_explicit_block_argument
+  assert_equal 20, method_with_explicit_block { |n| n * 2 }
+
+  add_one = lambda { |n| n + 1 }
+  assert_equal 11, method_with_explicit_block(&add_one)
+end
+```
+
+Sandwhich code (technique for making methods):
+```ruby
+# Sandwich code is code that comes in three parts: (1) the top slice
+# of bread, (2) the meat, and (3) the bottom slice of bread.  The
+# bread part of the sandwich almost always goes together, but
+# the meat part changes all the time.
+```
+
+Classes have a method called #instance_variable_get
+```ruby
+def test_you_can_politely_ask_for_instance_variable_values
+  fido = Dog2.new
+  fido.set_name("Fido")
+
+  assert_equal "Fido", fido.instance_variable_get("@name")
+end
+```
+
+Trying to define a class thats not available will give NameError:
+```ruby
+def test_dog_is_not_available_in_the_current_scope
+  assert_raise(NameError) do
+    Dog.new
+  end
+end
+```
