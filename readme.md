@@ -280,3 +280,29 @@ def test_dog_is_not_available_in_the_current_scope
   end
 end
 ```
+Constants can be looked up:
+```ruby
+def test_constants_can_be_looked_up_explicitly
+  assert_equal true, PI == AboutScope.const_get("PI")
+  assert_equal true, MyString == AboutScope.const_get("MyString")
+end
+```
+Using method missing in Ruby
+```ruby
+class WellBehavedFooCatcher
+  def method_missing(method_name, *args, &block)
+    if method_name.to_s[0,3] == "foo"
+      "Foo to you too"
+    else
+      super(method_name, *args, &block)
+    end
+  end
+end
+
+def test_foo_method_are_caught
+  catcher = WellBehavedFooCatcher.new
+
+  assert_equal "Foo to you too", catcher.foo_bar
+  assert_equal "Foo to you too", catcher.foo_baz
+end
+```
