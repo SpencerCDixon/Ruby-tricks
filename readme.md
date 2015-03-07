@@ -37,6 +37,8 @@ b
 # => 1
 ```
 
+### Ruby Koan Learning:
+
 Here is an example from Ruby Koans of this object reassignment:
 ```ruby
 def test_swapping_with_parallel_assignment
