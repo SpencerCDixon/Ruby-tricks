@@ -308,3 +308,44 @@ def test_foo_method_are_caught
   assert_equal "Foo to you too", catcher.foo_baz
 end
 ```
+
+Method Missing:
+```ruby
+class Proxy
+
+  attr_accessor :messages
+
+  def initialize(target_object)
+    @object = target_object
+    @messages = []
+  end
+
+  def method_missing(arg, params = nil)
+    if @object.respond_to?(arg)
+      messages << arg
+
+      if !params.nil?
+        @object.send(arg, params)
+      else
+        @object.send(arg)
+      end
+    else
+      raise NoMethodError
+    end
+  end
+
+  def called?(symbol)
+    messages.include?(symbol)
+  end
+
+  def number_of_times_called(symbol)
+    count = 0
+    messages.each do |message|
+      if message == symbol
+        count += 1
+      end
+    end
+    count
+  end
+end
+```
