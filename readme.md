@@ -349,3 +349,32 @@ class Proxy
   end
 end
 ```
+
+## Sandi Metz POODR
+
+```ruby
+class Gear
+  attr_reader :chainring, :cog, :rim, :tire
+  def initialize(chainring, cog, rim, tire)
+    @chainring = chainring
+    @cog = cog
+    @rim = rim
+    @tire = tire
+  end
+
+  def ratio 
+    chainring / cog.to_f
+  end
+
+  def gear_inches
+    ratio * (rim + (tire * 2))
+  end
+end
+```
+
+Given that class how can we determine if it has too many responsibilities? Ask
+questions like:
+
+*  'Mr. Gear, wha tis your ratio?' (seems good)  
+*  'Mr. Gear, what are your gear_inches?' (shaky ground)  
+*  'Mr. Gear, what is your tire size? (downright ridiculous)  
