@@ -375,6 +375,6 @@ end
 Given that class how can we determine if it has too many responsibilities? Ask
 questions like:
 
-*  'Mr. Gear, wha tis your ratio?' (seems good)  
+*  'Mr. Gear, what is your ratio?' (seems good)  
 *  'Mr. Gear, what are your gear_inches?' (shaky ground)  
 *  'Mr. Gear, what is your tire size? (downright ridiculous)  
