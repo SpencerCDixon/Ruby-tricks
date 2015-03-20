@@ -64,3 +64,6 @@ end
 
 str.hyphenated   # "h-e-l-l-o"
 
+# Think about it: class methods are just singleton methods on a given class
+# object
+
