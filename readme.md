@@ -378,3 +378,21 @@ questions like:
 *  'Mr. Gear, what is your ratio?' (seems good)  
 *  'Mr. Gear, what are your gear_inches?' (shaky ground)  
 *  'Mr. Gear, what is your tire size? (downright ridiculous)  
+
+Instead of using `extend` to create class methods from a module, you can also
+use it to create singleton methods on an instance of an object.  For example:
+```ruby
+module Person
+  def name
+    "This is a name"
+  end
+end
+
+class User
+end
+
+u1 = User.new
+
+u1.extend Person
+u1.name # => 'This is a name'
+```
