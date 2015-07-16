@@ -33,6 +33,14 @@ a = IncludedClass.new
 a.hello # => "hello world"
 ExtendedClass.hello_world # => "hello world"
 
+# Extending a class is the same as including a module in the singleton
+class SecondExtendedClass
+  class << self
+    include IncludeTest
+  end
+end
+SecondExtendedClass.hello # => "hello world"
+
 # Named Parameters
 
 def mymethod(name: "default", options: {})
